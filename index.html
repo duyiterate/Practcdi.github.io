@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
+
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="https://storage.googleapis.com/code.getmdl.io/1.1.0/material.min.js"></script>
+
+
+	<title>Iterate</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style type="text/css">
+		form {
+			max-width: 500px;
+			margin: 0 auto;
+		}
+
+		.mdl-grid {
+			margin-top: 5%;
+		}
+	</style>
+</head>
+
+<style>
+	.center {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+</style>
+
+<div>
+	<br>
+	<img src="./iterate.png" class="center" alt="iterate">
+	<p style="text-align: center ; color: grey ; font-size: 10px"> Recommendation Engine - Item Similarity Based Model
+	</p>
+</div>
+
+
+
+
+<body class="mdl-color">
+	<div class="mdl-layout mdl-js-layout">
+		<main class="mdl-layout__content">
+			<div class="mdl-grid mdl-grid--no-spacing">
+				<div class="mdl-cell mdl-cell--4-col mdl-cell--4-offset-desktop mdl-cell--2-offset-tablet">
+					<form action="#">
+
+						<div class="mdl-textfield mdl-js-textfield">
+							<input class="mdl-textfield__input" type="text" id="text1" autocomplete="off" autofocus>
+
+							<label class="mdl-textfield__label">Code (Product ID)</label>
+
+							<br><br>
+							<a class="waves-effect waves-dark btn-small blue text-center" id="btn1"
+								onclick="fetchUserData()">Submit</a>
+						</div>
+						<div>
+					</form>
+				</div>
+			</div>
+		</main>
+	</div>
+	<br>
+
+	<style>
+		#galleries li {
+			width: 225px;
+			display: inline-block;
+		}
+
+		#galleries li p {
+			margin: 10px 0 20px 0;
+		}
+	</style>
+
+
+
+
+	<div class="container" id="response">
+
+		<ul id="galleries">
+
+		</ul>
+	</div>
+
+
+
+
+	<script>
+
+
+		function fetchUserData() {
+
+			var product_ID = document.getElementById('text1').value;
+
+
+			fetch('https://circlekrecom.interplay.iterate.ai/product_id/' + product_ID)
+				.then(response => response.json())
+				.then(users => {
+					let output = '';
+					output += '<ul id="galleries">';
+					users[0]['Data'].forEach(function (user) {
+						output += `
+                           <li>
+        <img class="card" src="${user['img_url']}" width="200" height="200" border="0" title="${user['ITEM DESCRIPTION']}">
+        <p style="color:black;font-size:10px;font-family:poppins;">${user['ITEM DESCRIPTION']}</p>
+      </li>
+                        `;
+					});
+					output += '</ul>'
+					document.getElementById("response").innerHTML = output;
+				});
+		}
+	</script>
+
+
+
+</body>
+
+</html>
