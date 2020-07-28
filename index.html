@@ -38,7 +38,7 @@
 
 <div>
 	<br>
-	<img src="https://platform9.com/wp-content/uploads/2019/01/partner-logo_iterate-300x214.png" class="center" alt="iterate">
+	<img src="./iterate.png" class="center" alt="iterate">
 	<p style="text-align: center ; color: grey ; font-size: 10px"> Recommendation Engine - Item Similarity Based Model
 	</p>
 </div>
@@ -83,6 +83,14 @@
 
 
 
+	<div class="container" id="response_">
+		<ul id="galleries">
+
+		</ul>
+
+	</div>
+<br>
+
 
 	<div class="container" id="response">
 
@@ -90,6 +98,8 @@
 
 		</ul>
 	</div>
+
+
 
 
 
@@ -102,20 +112,48 @@
 			var product_ID = document.getElementById('text1').value;
 
 
+
+
 			fetch('https://circlekrecom.interplay.iterate.ai/product_id/' + product_ID)
 				.then(response => response.json())
 				.then(users => {
+
+
 					let output = '';
+
 					output += '<ul id="galleries">';
 					users[0]['Data'].forEach(function (user) {
 						output += `
-                           <li>
-        <img class="card" src="${user['img_url']}" width="200" height="200" border="0" title="${user['ITEM DESCRIPTION']}">
-        <p style="color:black;font-size:10px;font-family:poppins;">${user['ITEM DESCRIPTION']}</p>
-      </li>
+                        <li>
+						<img class="card" src="${user['img_url']}" width="150" height="150" border="0" title="img">
+						<p style="color:black;font-size:10px;font-family:poppins;">${user['ITEM DESCRIPTION']}</p>
+						<p  style="color:grey;font-size:9px;">${user['UPC']}</p>
+						</li>
                         `;
 					});
 					output += '</ul>'
+
+					let output_ = '';
+					var model = users[0]['Model'];
+
+
+					output_ += '<ul id="galleries">';
+					users[0]['Query'].forEach(function (user) {
+						output_ += `
+                        <li>
+						<img  src="${user['img_url']}" width="100" height="100" border="0" title="img">
+						<p style="color:black;font-size:10px;font-family:poppins;">${user['ITEM DESCRIPTION']}</p>
+						<p  style="color:grey;font-size:9px;">${user['UPC']}</p>
+						<p style="color:grey;font-size:10px"><b>${model}</b></p>
+						&nbsp;
+						<hr>
+						</li>
+                        `;
+					});
+					output_ += '</ul>'
+
+
+					document.getElementById("response_").innerHTML = output_;
 					document.getElementById("response").innerHTML = output;
 				});
 		}
